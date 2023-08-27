@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 public class OrderDetailDTO implements Serializable {
 
     private String orderId;
-    private String description;
-    private int qtyOnHand;
+    private String itemCode;
+    private int qty;
     private double unitPrice;
 
     public String getOrderId() {
@@ -18,20 +18,20 @@ public class OrderDetailDTO implements Serializable {
         this.orderId = orderId;
     }
 
-    public String getDescription() {
-        return description;
+    public String getItemCode() {
+        return itemCode;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
     }
 
-    public int getQtyOnHand() {
-        return qtyOnHand;
+    public int getQty() {
+        return qty;
     }
 
-    public void setQtyOnHand(int qtyOnHand) {
-        this.qtyOnHand = qtyOnHand;
+    public void setQty(int qty) {
+        this.qty = qty;
     }
 
     public double getUnitPrice() {
@@ -42,13 +42,15 @@ public class OrderDetailDTO implements Serializable {
         this.unitPrice = unitPrice;
     }
 
-    public OrderDetailDTO(String orderId, String description, int qtyOnHand, double unitPrice) {
+    public OrderDetailDTO(String orderId, String itemCode, int qty, double unitPrice) {
         this.orderId = orderId;
-        this.description = description;
-        this.qtyOnHand = qtyOnHand;
+        this.itemCode = itemCode;
+        this.qty = qty;
         this.unitPrice = unitPrice;
     }
 
     public OrderDetailDTO() {
     }
+
+
 }
