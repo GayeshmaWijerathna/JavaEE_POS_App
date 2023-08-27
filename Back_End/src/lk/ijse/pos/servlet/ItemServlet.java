@@ -79,11 +79,21 @@ public class ItemServlet extends HttpServlet {
                 resp.getWriter().print(objectBuilder.build());
             }
 
-
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state","Error");
+            error.add("message",e.getLocalizedMessage());
+            error.add("Data"," ");
+            resp.setStatus(500);
+            resp.getWriter().print(error.build());
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state","Error");
+            error.add("message",e.getLocalizedMessage());
+            error.add("Data"," ");
+            resp.getWriter().print(error.build());
         }
     }
 
@@ -119,8 +129,21 @@ public class ItemServlet extends HttpServlet {
             objectBuilder.add("Data", " ");
             resp.getWriter().print(objectBuilder.build());
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state","Error");
+            error.add("message",e.getLocalizedMessage());
+            error.add("Data"," ");
+            resp.setStatus(500);
+            resp.getWriter().print(error.build());
+
+        } catch (SQLException e) {
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state","Error");
+            error.add("message",e.getLocalizedMessage());
+            error.add("Data"," ");
+            resp.getWriter().print(error.build());
         }
 
     }
@@ -149,15 +172,21 @@ public class ItemServlet extends HttpServlet {
                 resp.getWriter().print(objectBuilder.build());
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            JsonObjectBuilder response = Json.createObjectBuilder();
-            response.add("state", "Error");
-            response.add("message", e.getMessage());
-            response.add("data", "");
-            resp.setStatus(400);
-            resp.getWriter().print(response.build());
+        } catch (ClassNotFoundException e) {
 
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state","Error");
+            error.add("message",e.getLocalizedMessage());
+            error.add("Data"," ");
+            resp.setStatus(500);
+            resp.getWriter().print(error.build());
+
+        } catch (SQLException e) {
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state","Error");
+            error.add("message",e.getLocalizedMessage());
+            error.add("Data"," ");
+            resp.getWriter().print(error.build());
         }
 
     }
