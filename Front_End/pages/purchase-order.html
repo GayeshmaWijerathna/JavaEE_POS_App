@@ -294,7 +294,7 @@
     }*!/*/
 
 $(document).ready(function() {
-   loadItemCode();
+    loadItemCode();
     loadCusCode();
 
     $("#selectItemCode").change(function() {
@@ -316,13 +316,11 @@ function loadItemCode() {
     $("#selectItemCode").empty();
     let code = $("#selectItemCode").val();
     $.ajax({
-      method: 'get',
-            dataType: 'json',
         url: 'http://localhost:8080/posNew/pages/item?code'+ code,
         success: function (res) {
-            console.log(res);
+            // console.log(res);
             for (let item of res) {
-                console.log(item.code);
+                // console.log(item.code);
                 let id = `<option>${item.code}</option>`;
                 $("#selectItemCode").append(id);
             }
@@ -343,12 +341,14 @@ function fetchItemDetails(itemCode) {
         data: { code: itemCode },
         success: function(res) {
             if (res.length > 0) {
-                var item = res[0];
-                $("#txtItemCode").val(item.code);
-                $("#txtItemDescription").val(item.description);
-                $("#txtItemPrice").val(item.unitPrice);
-                $("#txtQTYOnHand").val(item.qtyOnHand);
-            }
+                    var item = res[0];
+
+                    $("#txtItemCode").val(item.code);
+                    $("#txtItemDescription").val(item.description);
+                    $("#txtItemPrice").val(item.unitPrice);
+                    $("#txtQTYOnHand").val(item.qtyOnHand);
+                }
+
         },
         error: function(error) {
             console.error(error);
