@@ -303,12 +303,7 @@ $(document).ready(function() {
             fetchItemDetails(selectedCode);
         }
     });
-    $("#selectCusID").change(function() {
-        var selectedId = $(this).val();
-        if (selectedId) {
-            fetchCusDetails(selectedId);
-        }
-    });
+
 });
 
 
@@ -359,7 +354,7 @@ function loadCusCode() {
     $("#selectCusID").empty();
     let id = $("#selectCusID").val();
     $.ajax({
-        url: 'http://localhost:8080/posNew/pages/customer?id'+id,
+        url: 'http://localhost:8080/posNew/pages/customer?id ='+id,
         success: function (res) {
             console.log(res);
             for (let cus of res) {
@@ -374,21 +369,23 @@ function loadCusCode() {
     });
 }
 
-function fetchCusDetails(selectedId) {
+$("#selectCusID").click(
+
+function fetchCusDetails() {
+    let id = $("#selectCusID").val();
     $.ajax({
-        url: 'http://localhost:8080/posNew/pages/customer',
-        data:  { cusId: selectedId },
+        url: 'http://localhost:8080/posNew/pages/purchase-order?option=customer&id='+ id,
+        // data:  { cusId: selectedId },
         success: function(res) {
 
-            if (res.length > 0) {
-                var i =0;
-                var cus = res[i];
-                $("#orderCustomerID").val(cus.id);
-                $("#orderCustomerName").val(cus.name);
-                $("#orderCustomerAddress").val(cus.address);
+           if (res.length > 0) {
+
+                $("#orderCustomerID").val(res.id);
+                $("#orderCustomerName").val(res.name);
+                $("#orderCustomerAddress").val(res.address);
                 $("#orderCustomerSalary").val("N/A");
-                i ++;
-            }
+
+           }
 
         },
         error: function(error) {
@@ -396,7 +393,7 @@ function fetchCusDetails(selectedId) {
         }
     });
 }
-
+);
 
 
 
