@@ -24,10 +24,6 @@ public class PurchaseOrderServlet extends HttpServlet {
 
         String option = req.getParameter("option");
 
-
-
-
-
                 try {
                     Class.forName("com.mysql.jdbc.Driver");
                     Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/company", "root", "root123");
@@ -59,12 +55,37 @@ public class PurchaseOrderServlet extends HttpServlet {
 
                     resp.getWriter().print(objectBuilder.build());
 
-                System.out.println("awaaaa");
+//                System.out.println("awaaaa");
 
                 break;
             case    "item" :
 
+                String code = req.getParameter("code");
+                PreparedStatement pstm1 = connection.prepareStatement("select * from item where code =?");
+                pstm1.setString(1,code);
 
+                ResultSet rst1 = pstm1.executeQuery();
+                resp.addHeader("Content-Type","application/json");
+                resp.addHeader("Access-Control-Allow-Origin", "*");
+
+                JsonObjectBuilder objectBuilder1 = Json.createObjectBuilder();
+
+                while (rst1.next()) {
+
+                    String code1 = rst1.getString(1);
+                    String description = rst1.getString(2);
+                    String qty = rst1.getString(3);
+                    String price = rst1.getString(4);
+
+                    objectBuilder1.add("code",code1);
+                    objectBuilder1.add("description",description);
+                    objectBuilder1.add("qtyOnHand",qty);
+                    objectBuilder1.add("unitPrice",price);
+
+
+                }
+
+                resp.getWriter().print(objectBuilder1.build());
 
                 break;
         }
@@ -86,43 +107,6 @@ public class PurchaseOrderServlet extends HttpServlet {
                     resp.getWriter().print(error.build());
                 }
 
-
-     /*   try {
-            forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/company", "root", "root123");
-            PreparedStatement pstm = connection.prepareStatement("select * from orders");
-              ResultSet rst = pstm.executeQuery();
-
-            PrintWriter writer = resp.getWriter();
-            resp.addHeader("Access-Control-Allow-Origin","*");
-            resp.addHeader("Content-Type","application/json");
-
-            JsonArrayBuilder allCustomers = Json.createArrayBuilder();
-
-
-            while (rst.next()) {
-                String orderID = rst.getString(1);
-                String orderCusID = rst.getString(2);
-                String orderDate = rst.getString(3);
-
-                JsonObjectBuilder customer = Json.createObjectBuilder();
-
-                customer.add("oid",orderID);
-                customer.add("customerID",orderCusID);
-                customer.add("date",orderDate);
-
-                allCustomers.add(customer.build());
-            }
-
-
-            writer.print(allCustomers.build());
-
-
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }*/
     }
 
     @Override

@@ -297,12 +297,6 @@ $(document).ready(function() {
     loadItemCode();
     loadCusCode();
 
-    $("#selectItemCode").change(function() {
-        var selectedCode = $(this).val();
-        if (selectedCode) {
-            fetchItemDetails(selectedCode);
-        }
-    });
 
 });
 
@@ -327,20 +321,20 @@ function loadItemCode() {
 
 }
 
-
-function fetchItemDetails(itemCode) {
+$("#selectItemCode").click(
+function fetchItemDetails() {
+    let id = $("#selectItemCode").val();
     $.ajax({
-        url: 'http://localhost:8080/posNew/pages/item',
-        data: { code: itemCode },
+        url: 'http://localhost:8080/posNew/pages/purchase-order?option=item&code='+ id,
+        // data: { code: itemCode },
         success: function(res) {
-            if (res.length > 0) {
-                    var item = res[0];
 
-                    $("#txtItemCode").val(item.code);
-                    $("#txtItemDescription").val(item.description);
-                    $("#txtItemPrice").val(item.unitPrice);
-                    $("#txtQTYOnHand").val(item.qtyOnHand);
-                }
+
+                    $("#txtItemCode").val(res.code);
+                    $("#txtItemDescription").val(res.description);
+                    $("#txtItemPrice").val(res.unitPrice);
+                    $("#txtQTYOnHand").val(res.qtyOnHand);
+
 
         },
         error: function(error) {
@@ -348,7 +342,7 @@ function fetchItemDetails(itemCode) {
         }
     });
 }
-
+);
 
 function loadCusCode() {
     $("#selectCusID").empty();
@@ -378,14 +372,11 @@ function fetchCusDetails() {
         // data:  { cusId: selectedId },
         success: function(res) {
 
-           if (res.length > 0) {
-
-                $("#orderCustomerID").val(res.id);
+                    $("#orderCustomerID").val(res.id);
                 $("#orderCustomerName").val(res.name);
                 $("#orderCustomerAddress").val(res.address);
                 $("#orderCustomerSalary").val("N/A");
 
-           }
 
         },
         error: function(error) {
